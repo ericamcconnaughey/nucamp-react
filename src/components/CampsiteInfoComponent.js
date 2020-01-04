@@ -1,13 +1,12 @@
-import { Component } from "react";
+import React, { Component } from 'react';
 
 class CampsiteInfo extends Component {
 
   render() {
     if (this.props.campsite) {
-      return <div className="row"> </div>;
-    } else {
-      return <div></div>;
-    }
+      return <div className="row" />;
+    } 
+    return <div />;
   }
 }
 
