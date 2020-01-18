@@ -4,12 +4,21 @@ import { Card, CardImg, CardBody, CardText, Breadcrumb,
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
+const minLength = len => val => val && (val.length >= len);
+const maxLength = len => val => !val || (val.length <= len);
+
 class CommentForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isModalOpen: false
+      isModalOpen: false,
+      feedback: '',
+      touched: {
+          author: false,
+          rating: false,
+          text: false
+      }
     }
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -30,8 +39,8 @@ class CommentForm extends Component {
   render() {
     return (
       <React.Fragment>
-        <Button outline onClick={this.toggleModal}>
-          <i className="fa fa-pencil fa-lg" />
+        <Button outline onClick={this.toggleModal} className="btn-lg">
+          <i className="fa fa-pencil fa-lg" />{' '}
           Submit Comment
         </Button>
         
@@ -42,7 +51,9 @@ class CommentForm extends Component {
               <Row className="form-group">
                 <Col>
                   <Label htmlFor="rating">Rating</Label>
-                    <Control.select model=".rating" id="rating" name="rating">
+                    <Control.select model=".rating" id="rating" name="rating"
+                      className="form-control"
+                      >
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -55,7 +66,21 @@ class CommentForm extends Component {
                 <Col>
                   <Label htmlFor="author">Your Name</Label>
                     <Control.text model=".author" id="author" name="author"
-                        placeholder="Your Name"
+                        placeholder="Your Name" className="form-control"
+                        validators={{
+                          minLength: minLength(2),
+                          maxLength: maxLength(15)
+                      }}
+                  />
+                  <Errors 
+                    className="text-danger"
+                    model=".author"
+                    show="touched"
+                    component="div"
+                    messages={{
+                      minLength: 'Must be at least two characters',
+                      maxLength: 'Must be 15 characters or fewer'
+                    }} 
                   />
                 </Col>
               </Row>
@@ -63,7 +88,7 @@ class CommentForm extends Component {
                 <Col>
                   <Label htmlFor="text">Comment</Label>
                     <Control.textarea model=".text" id="text" name="text"
-                        rows="6"
+                        rows="6" className="form-control"
                   />
                 </Col>
               </Row>
@@ -102,9 +127,11 @@ function RenderCampsite({campsite}) {
         <h4>Comments</h4>
         {comments.map(comment => 
         <div key={comment.id}> {comment.text} <br />
-         -- {comment.author} 
+         -- {comment.author}, {' '}
          {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
         </div>)}
+        <br />
+        <CommentForm />
       </div>) 
       }
       return <div />;
@@ -131,7 +158,6 @@ function RenderCampsite({campsite}) {
             <div className="col">
               <RenderCampsite campsite={props.campsite} />
               <RenderComments comments={props.comments} />
-              <CommentForm />
             </div>
           </div>
         </div>);
