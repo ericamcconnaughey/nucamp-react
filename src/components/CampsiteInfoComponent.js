@@ -12,14 +12,8 @@ class CommentForm extends Component {
     super(props);
 
     this.state = {
-      isModalOpen: false,
-      feedback: '',
-      touched: {
-          author: false,
-          rating: false,
-          text: false
+      isModalOpen: false
       }
-    }
 
     this.toggleModal = this.toggleModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
