@@ -68,7 +68,7 @@ function RenderPartner({partner}) {
     if ({partner}) {
         return (
             <React.Fragment>
-                <Media object src={partner.image} alt={partner.name} width="150px" />
+                <Media object src={"assets/" + partner.image} alt={partner.name} width="150px" />
                 <Media body className="ml-5 mb-4">
                     <Media heading>{partner.name}</Media>
                     {partner.description}
@@ -90,18 +90,19 @@ function PartnerList(props) {
 
     if (props.partners.isLoading) {
         return <Loading />;
-    } if (props.partners.errMess) {
+    } else if (props.partners.errMess) {
         return (
             <div className="col">
                 <h4>{props.partners.errMess}</h4>
             </div>
         );
+    } else {
+        return (
+            <div className="col mt-4">
+                <Media list>{partners}</Media>
+            </div>
+        )
     }
-    return (
-        <div className="col mt-4">
-            <Media list>{partners}</Media>
-        </div>
-    )
 }
 
 export default About;

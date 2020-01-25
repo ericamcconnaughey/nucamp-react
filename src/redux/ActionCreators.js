@@ -166,8 +166,8 @@ export const fetchPartners  = () => dispatch => {
         }
       )
       .then(response => response.json())
-      .then(partners => dispatch(addPromotions(partners)))
-      .catch(error => dispatch(promotionsFailed(error.message)));
+      .then(partners => dispatch(addPartners(partners)))
+      .catch(error => dispatch(partnersFailed(error.message)));
 };
 
 export const partnersLoading = () => ({
@@ -184,11 +184,21 @@ export const addPartners = partners => ({
   payload: partners
 });
 
-export const postFeedback = (feedback) => () => {
-
+export const postFeedback = (firstName, lastName, phoneNum, email, agree, contactType, feedback) => () => {
+  const newFeedback = {
+    firstName,
+    lastName,
+    phoneNum,
+    email,
+    agree,
+    contactType,
+    feedback 
+  };
+  newFeedback.date = new Date().toISOString();
+  
   return fetch(baseUrl + 'feedback', {
       method: "POST",
-      body: JSON.stringify(feedback),
+      body: JSON.stringify(newFeedback),
       headers: {
         "Content-Type": "application/json"
       },
