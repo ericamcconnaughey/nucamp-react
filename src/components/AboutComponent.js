@@ -3,31 +3,6 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 
-function PartnerList(props) {
-
-    const partners = props.partners.map(partner => {
-        return (
-            <Media of="li" key={partner.id}>
-                <RenderPartner partner={partner} />
-            </Media>
-        );
-    });
-
-    if (props.isLoading) {
-        return <Loading />;
-    } if (props.errMess) {
-        return (
-            <div className="col">
-                <h4>{props.errMess}</h4>
-            </div>
-        )
-    }
-    return (
-        <div className="col mt-4">
-            <Media list={props}></Media>
-        </div>
-    )
-}
 
 function About(props) {
 
@@ -82,9 +57,7 @@ function About(props) {
             <div className="row row-content">
                 <div className="col-12">
                     <h3>Community Partners</h3>
-                </div>
-                <div className="col mt-4">
-                    <Media list={props}/>
+                        <PartnerList partners={props.partners} />
                 </div>
             </div>
         </div>
@@ -92,13 +65,43 @@ function About(props) {
 }
 
 function RenderPartner({partner}) {
-    if (partner) {
+    if ({partner}) {
         return (
-            <PartnerList partner={partner} />
+            <React.Fragment>
+                <Media object src={partner.image} alt={partner.name} width="150px" />
+                <Media body className="ml-5 mb-4">
+                    <Media heading>{partner.name}</Media>
+                    {partner.description}
+                </Media>
+            </React.Fragment>
         )
-    } else {
-        return <div />
     }
+}
+
+function PartnerList(props) {
+
+    const partners = props.partners.partners.map(partner => {
+        return (
+            <Media tag="li" key={partner.id}>
+                <RenderPartner partner={partner} />
+            </Media>
+        );
+    });
+
+    if (props.partners.isLoading) {
+        return <Loading />;
+    } if (props.partners.errMess) {
+        return (
+            <div className="col">
+                <h4>{props.partners.errMess}</h4>
+            </div>
+        );
+    }
+    return (
+        <div className="col mt-4">
+            <Media list>{props.partners.partners}</Media>
+        </div>
+    )
 }
 
 export default About;
