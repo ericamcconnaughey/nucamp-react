@@ -192,7 +192,7 @@ class Contact extends Component {
                                 </div>
                             </Col>
                             <Col md={4}>
-                                <Control.select model=".contactType" name="contactType"
+                                <Control.select model="contactType" name="contactType"
                                     className="form-control">
                                     <option>By Phone</option>
                                     <option>By Email</option>
