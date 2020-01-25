@@ -99,7 +99,7 @@ function PartnerList(props) {
     }
     return (
         <div className="col mt-4">
-            <Media list>{props.partners.partners}</Media>
+            <Media list>{partners}</Media>
         </div>
     )
 }
