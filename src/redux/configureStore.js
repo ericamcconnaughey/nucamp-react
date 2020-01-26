@@ -17,7 +17,7 @@ export const ConfigureStore = () => {
       partners: Partners,
       promotions: Promotions,
       ...createForms({
-        feebackForm: InitialFeedback
+        feedbackForm: InitialFeedback
       })
     }),
     applyMiddleware(thunk, logger)

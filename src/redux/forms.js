@@ -1,9 +1,12 @@
+
+
 export const InitialFeedback = {
-  firstName: '',
-  lastName: '',
-  phoneNum: '',
+  firstname: '',
+  lastname: '',
+  telnum: '',
   email: '',
   agree: false,
   contactType: 'Phone',
-  feedback: ''
+  message: '',
+  date: ''
 };
